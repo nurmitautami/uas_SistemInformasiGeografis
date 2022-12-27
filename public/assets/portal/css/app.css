@@ -1,0 +1,61 @@
+.sidebar-wrapper {
+    width: 80px;
+}
+
+.sidebar-wrapper .sidebar-header {
+    padding: 2rem 10px;
+}
+
+.sidebar-wrapper .menu {
+    padding: 0 10px;
+}
+
+.sidebar-wrapper .menu .sidebar-link i,
+.sidebar-wrapper .menu .sidebar-link svg {
+    font-size: 1.8rem;
+}
+
+.sidebar-wrapper .menu .sidebar-link {
+    padding: 1rem;
+}
+
+.sidebar-wrapper .menu .sidebar-link .bi {
+    height: 2rem !important;
+    width: 2rem;
+}
+
+#main {
+    margin-left: 80px;
+    padding: 0;
+}
+
+#main header {
+    position: fixed;
+    top: 0;
+    z-index: 100000;
+}
+
+.sidebar-footer {
+    padding: 2rem 15px;
+}
+
+.sidebar-footer img {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.pristine-error {
+    color: #f30;
+    margin-top: 5px;
+}
+.has-danger .form-control {
+    border-color: #f30;
+}
+[class^="bi-"]::before,
+[class*=" bi-"]::before {
+    margin-top: 2px;
+}
+
+.form-group[class*=has-icon-] .form-control-icon{
+    top: 30px;
+}

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal GIS</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/mazer/assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/mazer/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/mazer/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/mazer/assets/css/app.css">
+    <link rel="shortcut icon" href="/mazer/assets/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+        crossorigin=""></script>
+    <link rel="stylesheet" href="/assets/portal/css/app.css">
+</head>
+
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active  d-flex justify-content-between flex-column">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-center">
+                        <div class="logo">
+                            <a href="/portal.html">
+                                <i class="bi bi-map"></i>
+                            </a>
+                        </div>
+                        <div class="toggler d-none">
+                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+
+                        <li class="sidebar-item  ">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-map"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-footer">
+                    <div class="avatar avatar-xl">
+                        <a href="#" class="btn-avatar" data-bs-toggle="modal" data-bs-target="#userModal">
+                            <img src="mazer/assets/images/faces/1.jpg" alt="Face 1">
+                        </a>
+                    </div>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
+        <div id="main">
+            <header class="d-none">
+                <a href="#" class="burger-btn d-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+            <div id="map" style="width: 100%; height:100vh"></div>
+            
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">User Profil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger shadow-lg" onclick="logout()" type="button"><i class="bi bi-power"></i> Log out</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END User Modal -->
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Form Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="my-3">
+                        <i class="bi bi-patch-check"></i> Silakan masukkan akun yang telah di daftarkan
+                    </h4>
+                    <form id="form-login">
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" class="form-control form-control-xl" required name="username" placeholder="Username">
+                            <div class="form-control-icon">
+                                <i class="bi bi-person"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="password" class="form-control form-control-xl" required name="password" placeholder="Password">
+                            <div class="form-control-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                        </div>
+                        <!-- <div class="form-check form-check-lg d-flex align-items-end">
+                            <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label text-gray-600" for="flexCheckDefault">
+                                Keep me logged in
+                            </label>
+                        </div> -->
+                        <button class="btn btn-primary btn-block btn-lg shadow-lg" type="submit">Log in</button>
+                        <p class="mt-3 text-center">Or</p>
+                        <a href="http://webgis-ci4.dotid/" class="btn btn-danger btn-block btn-lg shadow-lg">Sign up</a>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End : Login Modal -->
+
+
+    <script src="/mazer/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/mazer/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/mazer/assets/js/mazer.js"></script>
+    <script src="https://combinatronics.com/Sha256/Pristine/master/dist/pristine.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>    
+        let tokenUn = localStorage.getItem('tokenUn');
+        let tokenPw = localStorage.getItem('tokenPw');
+        console.log(tokenUn,'++++++',tokenPw);
+        let checkUser = async () => {
+            let get = await fetch(`${apiUrl}/auth/check`,{
+                headers : {
+                    'Authorization':'Basic '+btoa(tokenUn+':'+tokenPw)
+                }
+            });
+            let resp = await get.json();
+            console.log(resp);
+        }
+
+        let apiUrl = 'http://webgis-ci4.dotid/api';
+        let elBtnAvatar = document.querySelector('.btn-avatar');
+        if((tokenUn==null || tokenUn=='') && (tokenPw == null || tokenPw == ''))
+        {
+            elBtnAvatar.setAttribute('data-bs-target', '#loginModal');
+        }
+        else
+        {
+            checkUser();
+            elBtnAvatar.setAttribute('data-bs-target','#userModal');
+        }
+    </script>
+    <script src="assets/portal/map.js"></script>
+    <script src="assets/portal/login.js"></script>
+
+</body>
+
+</html>
